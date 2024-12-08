@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model UserData {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String?
+  website      String?
+  mobile       String
+  profileImage Bytes?
+  company      String?
+  street       String?
+  city         String?
+  zip          String?
+  country      String?
+  pageColor    String?
+  createdAt    DateTime @default(now())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  QRCode       QRCode[]
+}
+
+model Url {
+  id          Int    @id @default(autoincrement())
+  originalUrl String
+  shortUrl    String
+  shortId     String @unique
+  userId      Int
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model QRCode {
+  id         Int      @id @default(autoincrement())
+  QRImage    Bytes?
+  createdAt  DateTime @default(now())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  userdata   UserData @relation(fields: [userdataId], references: [id])
+  userdataId Int @unique
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  qrcodes   QRCode[]
+  Url       Url[]
+  UserData  UserData[]
+}
