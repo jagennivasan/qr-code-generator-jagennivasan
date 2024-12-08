@@ -31,9 +31,6 @@ export default async function UserInfo() {
 
   const qrCodes = await fetchUserQRCodes();
 
-if(qrCodes.length ===3){
-  alert("hello")
-}
 
 
   return (
