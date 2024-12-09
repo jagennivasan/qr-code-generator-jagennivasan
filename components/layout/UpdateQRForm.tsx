@@ -130,10 +130,10 @@ export default function UpdateQR({ id }: UpdateQRProps) {
   };
 
   return (
-    <div className="grid place-content-center h-screen m-5">
+    <div className="flex justify-center items-center  md:h-screen">
       <form
         onSubmit={handleSubmit}
-        className=" md:w-[800px]   items-center  space-y-4 p-4 border rounded-lg "
+        className="md:w-[800px]  items-center  space-y-4 p-4 border rounded-lg "
       >
         <h2 className="text-lg font-bold">Update QR Code</h2>
 
